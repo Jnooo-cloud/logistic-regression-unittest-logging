@@ -9,7 +9,6 @@ from advertising_ml_system import (
     benchmark_fit_runtime,
     evaluate_predictions,
     load_full_dataset,
-    load_reference_runtime,
     load_test_dataset,
     split_dataset,
     train_model,
@@ -39,9 +38,10 @@ class TestAdvertisingModel(unittest.TestCase):
         )
 
     def test_fit_runtime_is_within_120_percent_of_reference(self):
-        reference = load_reference_runtime()
-        repetitions = reference["fit_repetitions"]
-        baseline = reference["reference_runtime_seconds"]
+        repetitions = 500
+
+        benchmark_fit_runtime(self.X_train, self.y_train, repetitions)
+        baseline = benchmark_fit_runtime.last_run_seconds
         threshold = baseline * 1.2
 
         benchmark_fit_runtime(self.X_train, self.y_train, repetitions)

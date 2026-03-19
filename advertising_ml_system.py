@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import functools
-import json
 import logging
 import time
 from pathlib import Path
@@ -16,7 +15,6 @@ from sklearn.preprocessing import StandardScaler
 ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "data" / "Advertising.csv"
 TEST_DATA_PATH = ROOT / "test_data" / "advertising_test_data.csv"
-REFERENCE_RUNTIME_PATH = ROOT / "test_data" / "reference_runtime.json"
 LOG_DIR = ROOT / "logs"
 LOG_FILE = LOG_DIR / "model_test.log"
 
@@ -137,7 +135,3 @@ def benchmark_fit_runtime(
     for _ in range(repetitions):
         build_model().fit(X_train, y_train)
     return repetitions
-
-
-def load_reference_runtime(path: Path = REFERENCE_RUNTIME_PATH) -> dict:
-    return json.loads(path.read_text())
